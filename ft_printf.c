@@ -6,19 +6,21 @@
 /*   By: jsabroso <jsabroso@student.42malaga.c>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 13:20:41 by jsabroso          #+#    #+#             */
-/*   Updated: 2024/10/27 12:10:49 by jsabroso         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:34:30 by jsabroso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*static void	ft_select_format(char const *str, va_list ap, int *count)
+static void	ft_print_format(char const *str, va_list ap, int *count)
 {
-	(void)ap;
-	ft_pf_putchar(*str);
+	if (*str == 'c')
+		ft_pf_putchar(va_arg(ap, int));
+	else if (*str == 's')
+		ft_pf_putstr(va_arg(ap, char *));
 	(*count)++;
 }
-*/
+
 int	ft_printf(char const *str, ...)
 {
 	va_list	ap;
@@ -26,11 +28,10 @@ int	ft_printf(char const *str, ...)
 
 	count = 0;
 	va_start(ap, str);
-	while (str)
+	while (*str)
 	{
-			// ft_select_format(++str, ap, &count);
 		if (*str == '%')
-			ft_pf_putchar(*str);
+			ft_print_format(++str, ap, &count);
 		else
 		{
 			ft_pf_putchar(*str);
